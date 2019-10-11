@@ -1,0 +1,12 @@
+.key {
+  border: solid 1px #000;
+  cursor: pointer;
+  height: 400px;
+  width: 200px;
+}
+
+.black {
+  background-color: #000;
+  height: 300px;
+  width: 100px;
+}
