@@ -2,6 +2,7 @@
   "name": "keyboard",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://jcmckay.github.io/keyboard",
   "dependencies": {
     "@types/jest": "24.0.18",
     "@types/node": "12.7.12",
@@ -16,6 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "post-build": "rm -rf ~/src/jcmckay/jcmckay.github.io/keyboard/* && mv -v build/* ~/src/jcmckay/jcmckay.github.io/keyboard/",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

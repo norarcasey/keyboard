@@ -41,7 +41,15 @@ const Keyboard: FC<IKeyboardProps> = props => {
   return (
     <div className="keyboard">
       {keys.map(k => (
-        <Key key={k.key} color={k.color} style={k.style} onMouseDown={() => handleMouseDown(k.key)} onMouseUp={handleMouseUp}></Key>
+        <Key
+          key={k.key}
+          color={k.color}
+          style={k.style}
+          onTouchStart={() => handleMouseDown(k.key)}
+          onTouchEnd={handleMouseUp}
+          onMouseDown={() => handleMouseDown(k.key)}
+          onMouseUp={handleMouseUp}
+        ></Key>
       ))}
     </div>
   );
