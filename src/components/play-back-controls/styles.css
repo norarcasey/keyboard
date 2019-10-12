@@ -1,0 +1,10 @@
+.controls {
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  font-size: 34px;
+  justify-content: space-between;
+  line-height: 36px;
+  margin: 0 auto;
+  width: 200px;
+}
