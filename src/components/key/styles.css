@@ -8,5 +8,6 @@
 .black {
   background-color: #000;
   height: 300px;
+  position: absolute;
   width: 100px;
 }

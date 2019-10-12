@@ -5,29 +5,44 @@ import Tone from 'tone';
 import './styles.css';
 
 export interface IKeyboardProps {}
+export interface IKey {
+  key: string;
+  color?: string;
+  style?: object;
+}
 
 const Keyboard: FC<IKeyboardProps> = props => {
   const synth = new Tone.Synth().toMaster();
 
-  const handleKeyClick = (key: string) => {
-    synth.triggerAttackRelease(key, '8n');
+  const handleMouseDown = (key: string) => {
+    synth.triggerAttack(key);
   };
+
+  const handleMouseUp = () => {
+    synth.triggerRelease();
+  };
+
+  const keys: IKey[] = [
+    { key: 'C4' },
+    { key: 'C#4', color: 'black', style: { left: '65px' } },
+    { key: 'D4' },
+    { key: 'Eb4', color: 'black', style: { left: '200px' } },
+    { key: 'E4' },
+    { key: 'F4' },
+    { key: 'F#4', color: 'black', style: { left: '440px' } },
+    { key: 'G4' },
+    { key: 'G#4', color: 'black', style: { left: '570px' } },
+    { key: 'A4' },
+    { key: 'Bb4', color: 'black', style: { left: '700px' } },
+    { key: 'B4' },
+    { key: 'C5' }
+  ];
 
   return (
     <div className="keyboard">
-      <Key onClick={() => handleKeyClick('C4')}></Key>
-      <Key color="black" style={{ position: 'absolute', left: '65px' }} onClick={() => handleKeyClick('C#4')}></Key>
-      <Key onClick={() => handleKeyClick('D4')}></Key>
-      <Key color="black" style={{ position: 'absolute', left: '200px' }} onClick={() => handleKeyClick('Eb4')}></Key>
-      <Key onClick={() => handleKeyClick('E4')}></Key>
-      <Key onClick={() => handleKeyClick('F4')}></Key>
-      <Key color="black" style={{ position: 'absolute', left: '440px' }} onClick={() => handleKeyClick('F#4')}></Key>
-      <Key onClick={() => handleKeyClick('G4')}></Key>
-      <Key color="black" style={{ position: 'absolute', left: '570px' }} onClick={() => handleKeyClick('G#4')}></Key>
-      <Key onClick={() => handleKeyClick('A4')}></Key>
-      <Key color="black" style={{ position: 'absolute', left: '700px' }} onClick={() => handleKeyClick('Bb4')}></Key>
-      <Key onClick={() => handleKeyClick('B4')}></Key>
-      <Key onClick={() => handleKeyClick('C5')}></Key>
+      {keys.map(k => (
+        <Key key={k.key} color={k.color} style={k.style} onMouseDown={() => handleMouseDown(k.key)} onMouseUp={handleMouseUp}></Key>
+      ))}
     </div>
   );
 };
