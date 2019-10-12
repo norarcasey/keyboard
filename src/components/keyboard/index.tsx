@@ -14,11 +14,11 @@ export interface IKey {
 const Keyboard: FC<IKeyboardProps> = props => {
   const synth = new Tone.Synth().toMaster();
 
-  const handleMouseDown = (key: string) => {
+  const handleKeyPress = (key: string) => {
     synth.triggerAttack(key);
   };
 
-  const handleMouseUp = () => {
+  const handleKeyRelease = () => {
     synth.triggerRelease();
   };
 
@@ -29,27 +29,23 @@ const Keyboard: FC<IKeyboardProps> = props => {
     { key: 'Eb4', color: 'black', style: { left: '200px' } },
     { key: 'E4' },
     { key: 'F4' },
-    { key: 'F#4', color: 'black', style: { left: '440px' } },
+    { key: 'F#4', color: 'black', style: { left: '432px' } },
     { key: 'G4' },
-    { key: 'G#4', color: 'black', style: { left: '570px' } },
+    { key: 'G#4', color: 'black', style: { left: '551px' } },
     { key: 'A4' },
-    { key: 'Bb4', color: 'black', style: { left: '700px' } },
+    { key: 'Bb4', color: 'black', style: { left: '674px' } },
     { key: 'B4' },
-    { key: 'C5' }
+    { key: 'C5' },
+    { key: 'C#5', color: 'black', style: { left: '909px' } },
+    { key: 'D5' },
+    { key: 'Eb5', color: 'black', style: { left: '1030px' } },
+    { key: 'E5' }
   ];
 
   return (
     <div className="keyboard">
       {keys.map(k => (
-        <Key
-          key={k.key}
-          color={k.color}
-          style={k.style}
-          onTouchStart={() => handleMouseDown(k.key)}
-          onTouchEnd={handleMouseUp}
-          onMouseDown={() => handleMouseDown(k.key)}
-          onMouseUp={handleMouseUp}
-        ></Key>
+        <Key key={k.key} color={k.color} style={k.style} onKeyPress={() => handleKeyPress(k.key)} onKeyRelease={handleKeyRelease}></Key>
       ))}
     </div>
   );

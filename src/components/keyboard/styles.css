@@ -1,7 +1,8 @@
 .keyboard {
   display: flex;
   flex-direction: row;
-  max-width: 1000px;
-  min-width: 1000px;
-  width: 1000px;
+  max-width: 1200px;
+  min-width: 1200px;
+  touch-action: manipulation;
+  width: 1200px;
 }
