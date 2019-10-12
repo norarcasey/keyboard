@@ -1,8 +1,10 @@
 .keyboard {
   display: flex;
   flex-direction: row;
+  margin: 40px auto;
   max-width: 1200px;
   min-width: 1200px;
+  position: relative;
   touch-action: manipulation;
   width: 1200px;
 }
