@@ -1,7 +1,7 @@
 // @ts-ignore
 import Tone from 'tone';
 
-export const Playback = [
+export const AxelF = [
   // 1st Measure
   {
     time: Tone.Time('0:0:0'),
@@ -122,4 +122,4 @@ export const Playback = [
   }
 ];
 
-export default Playback;
+export default AxelF;

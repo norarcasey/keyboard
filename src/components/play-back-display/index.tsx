@@ -9,7 +9,7 @@ const PlayBackDisplay: FC<IPlayBackDisplay> = props => {
   return (
     <div className="play-back-display">
       {captureContext.playbackNotes.map((pbn, i) => (
-        <div key={`note-${pbn.note}-${i}`}>{`Note: ${pbn.note}, Duration: ${pbn.dur}`}</div>
+        <div key={`note-${pbn.note}-${i}`}>{`Note: ${pbn.note}, Duration: ${pbn.dur}, Time: ${pbn.time}`}</div>
       ))}
     </div>
   );
