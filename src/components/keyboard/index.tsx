@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
 import Key from '../key';
-// @ts-ignore
-import Tone from 'tone';
 import './styles.css';
 
 export interface IKeyboardProps {}
@@ -12,16 +10,6 @@ export interface IKey {
 }
 
 const Keyboard: FC<IKeyboardProps> = props => {
-  const synth = new Tone.Synth().toMaster();
-
-  const handleKeyPress = (key: string) => {
-    synth.triggerAttack(key);
-  };
-
-  const handleKeyRelease = () => {
-    synth.triggerRelease();
-  };
-
   const keys: IKey[] = [
     { key: 'C4' },
     { key: 'C#4', color: 'black', style: { left: '65px' } },
@@ -45,7 +33,7 @@ const Keyboard: FC<IKeyboardProps> = props => {
   return (
     <div className="keyboard">
       {keys.map(k => (
-        <Key key={k.key} color={k.color} style={k.style} onKeyPress={() => handleKeyPress(k.key)} onKeyRelease={handleKeyRelease}></Key>
+        <Key key={k.key} note={k.key} color={k.color} style={k.style}></Key>
       ))}
     </div>
   );
