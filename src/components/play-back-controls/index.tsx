@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { CaptureContext, ICaptureContext } from '../../contexts/capture-context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faCircle, faStop } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faCircle, faStop, faBan } from '@fortawesome/free-solid-svg-icons';
 // @ts-ignore
 import Tone from 'tone';
 import AxelF from './axel-f';
@@ -14,20 +14,26 @@ const PlayBackControls: FC<IPlayBackControls> = props => {
   const [isPlaying, setIsPlaying] = useState();
   const [part, setPart] = useState();
   const [playback, setPlayback] = useState(AxelF as any);
+  const [lastNote, setLastNote] = useState();
   const [synth] = useState(new Tone.Synth().toMaster());
 
   useEffect(() => {
-    if (captureContext.playbackNotes.length > 0) {
+    const playbackNotes = captureContext.playbackNotes;
+
+    if (playbackNotes.length > 0) {
+      setLastNote(playbackNotes[playbackNotes.length - 1]);
       setPlayback(captureContext.playbackNotes);
+    } else {
+      setLastNote(AxelF[AxelF.length - 1]);
+      setPlayback(AxelF);
     }
   }, [captureContext.playbackNotes]);
 
   useEffect(() => {
     if (part && part.length > 0) {
       part.start(0);
-      const lastNote = playback[playback.length - 1];
 
-      Tone.Transport.schedule(function(time: any) {
+      Tone.Transport.scheduleOnce(function(time: any) {
         part.removeAll();
         Tone.Transport.toggle();
         setIsPlaying(false);
@@ -52,21 +58,29 @@ const PlayBackControls: FC<IPlayBackControls> = props => {
     setIsPlaying(false);
   };
 
+  const handleClearPlaybackData = () => {
+    captureContext.clearCaptureData();
+    part.removeAll();
+  };
+
   return (
     <div className="controls">
       <div>
         {isPlaying ? (
-          <div onClick={handleStopClick}>
+          <div onClick={handleStopClick} title="stop">
             <FontAwesomeIcon size="lg" icon={faStop} />
           </div>
         ) : (
-          <div onClick={handlePlayClick}>
+          <div onClick={handlePlayClick} title="play">
             <FontAwesomeIcon size="lg" icon={faPlay} />
           </div>
         )}
       </div>
-      <div className="record">
+      <div className="record" title="record">
         <FontAwesomeIcon size="lg" color="red" icon={faCircle} />
+      </div>
+      <div className="clear" title="clear" onClick={handleClearPlaybackData}>
+        <FontAwesomeIcon size="lg" icon={faBan} />
       </div>
     </div>
   );

@@ -10,8 +10,10 @@ const App: React.FC = () => {
     <div className="App">
       <CaptureProvider>
         <Keyboard />
-        <PlayBackControls />
-        <PlaybackDisplay />
+        <div className="playback-container">
+          <PlaybackDisplay />
+          <PlayBackControls />
+        </div>
       </CaptureProvider>
     </div>
   );

@@ -6,6 +6,7 @@ export interface ICaptureContext {
   captureStartTime: number;
   playbackNotes: IPlaybackNote[];
   captureNote(playbackNote: IPlaybackNote): void;
+  clearCaptureData(): void;
 }
 export interface ICaptureProviderProps {}
 export interface IPlaybackNote {
@@ -33,7 +34,13 @@ export const CaptureProvider: FC<ICaptureProviderProps> = props => {
     setPlaybackNotes([...playbackNotes, playbackNote]);
   };
 
+  const clearCaptureData = () => {
+    setPlaybackNotes([]);
+  };
+
   return (
-    <CaptureContext.Provider value={{ captureNote: handleCaptureNote, captureStartTime, playbackNotes }}>{props.children}</CaptureContext.Provider>
+    <CaptureContext.Provider value={{ captureNote: handleCaptureNote, captureStartTime, clearCaptureData, playbackNotes }}>
+      {props.children}
+    </CaptureContext.Provider>
   );
 };
