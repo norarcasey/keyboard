@@ -118,7 +118,7 @@ export const AxelF = [
   {
     time: Tone.Time('2:3:2'),
     note: 'D3',
-    dur: '8n'
+    dur: '0:2:2'
   }
 ];
 
