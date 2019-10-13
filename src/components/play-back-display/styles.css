@@ -1,0 +1,41 @@
+.play-back-display {
+  border: solid 1px #000;
+  height: 300px;
+  width: 350px;
+}
+
+.header {
+  background-color: #ccc;
+  display: flex;
+  font-weight: bold;
+  line-height: 25px;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.data {
+  display: flex;
+}
+
+.note-header,
+.note-data,
+.time-header,
+.time-data {
+  width: 30%;
+}
+
+.duration-header,
+.duration-data {
+  width: 40%;
+}
+
+.container {
+  height: 240px;
+  padding: 5px 10px;
+}
+
+.scroll-container {
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+}
