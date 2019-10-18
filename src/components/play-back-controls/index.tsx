@@ -42,7 +42,7 @@ const PlayBackControls: FC<IPlayBackControls> = props => {
       Tone.Transport.toggle();
       setIsPlaying(true);
     }
-  }, [part]);
+  }, [part, lastNote]);
 
   const handlePlayClick = () => {
     setPart(
