@@ -40,7 +40,7 @@ export const KeyboardProvider: FC<IKeyboardProviderProps> = props => {
 
         if (!kpObj.isPressed) {
           kpObj.isPressed = true;
-          kpObj.synth.triggerAttack((KeyboardMap as any)[keyPressed]);
+          kpObj.synth.triggerAttack((KeyboardMap as any)[keyPressed], Tone.context.currentTime);
           (keysPressed as any)[keyPressed] = kpObj;
         }
       },

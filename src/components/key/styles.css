@@ -1,12 +1,16 @@
 .key {
+  align-items: flex-end;
   border: solid 1px #000;
   cursor: pointer;
+  display: flex;
   height: 400px;
+  justify-content: center;
   width: 200px;
 }
 
 .black {
   background-color: #000;
+  color: #fff;
   height: 300px;
   position: absolute;
   width: 90px;

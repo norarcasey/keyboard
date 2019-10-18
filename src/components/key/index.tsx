@@ -7,6 +7,7 @@ import './styles.css';
 
 export interface IKeyProps {
   note: string;
+  keyboardKey: string;
   color?: string;
   style?: object;
 }
@@ -15,7 +16,7 @@ const Key: FC<IKeyProps> = props => {
   const captureContext: ICaptureContext = useContext(CaptureContext);
   const [keyPressedDateTime, setKeyPressDateTime] = useState();
   const [synth] = useState(new Tone.Synth().toMaster());
-  const { color, note, style } = props;
+  const { color, keyboardKey, note, style } = props;
 
   const handleKeyPress = () => {
     synth.triggerAttack(note);
@@ -36,9 +37,17 @@ const Key: FC<IKeyProps> = props => {
   };
 
   return isMobile ? (
-    <div className={`key ${color}`} style={style} onTouchStart={handleKeyPress} onTouchEnd={handleKeyRelease}></div>
+    <div className={`key ${color}`} style={style} onTouchStart={handleKeyPress} onTouchEnd={handleKeyRelease}>
+      <div className="note-name">
+        {note}({keyboardKey})
+      </div>
+    </div>
   ) : (
-    <div className={`key ${color}`} style={style} onMouseDown={handleKeyPress} onMouseUp={handleKeyRelease}></div>
+    <div className={`key ${color}`} style={style} onMouseDown={handleKeyPress} onMouseUp={handleKeyRelease}>
+      <div className="note-name">
+        {note}({keyboardKey})
+      </div>
+    </div>
   );
 };
 
