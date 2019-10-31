@@ -60,7 +60,9 @@ const PlayBackControls: FC<IPlayBackControls> = props => {
 
   const handleClearPlaybackData = () => {
     captureContext.clearCaptureData();
-    part.removeAll();
+    if (part && part.length > 0) {
+      part.removeAll();
+    }
   };
 
   return (
