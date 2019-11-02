@@ -28,12 +28,9 @@ const Key: FC<IKeyProps> = props => {
   const handleKeyRelease = () => {
     synth.triggerRelease();
 
-    const dur = calculateDuration();
-    captureContext.captureNote({ note, dur } as IPlaybackNote);
-  };
-
-  const calculateDuration = () => {
-    return Tone.Time((new Date().getTime() - keyPressedDateTime) / 1000).toNotation();
+    const dur = captureContext.calculateDuration(keyPressedDateTime);
+    const captureNote: IPlaybackNote = { note, dur };
+    captureContext.captureNote(captureNote);
   };
 
   return isMobile ? (

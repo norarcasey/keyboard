@@ -1,6 +1,13 @@
-import React, { FC } from 'react';
+import React, { FC, useContext, useEffect, useReducer } from 'react';
+import { CaptureContext, ICaptureContext, IPlaybackNote } from '../../contexts/capture-context';
+import reducer, { ActionName, Payload } from './reducer';
 import Key from '../key';
 import './styles.css';
+
+// @ts-ignore
+import get from 'lodash/get';
+// @ts-ignore
+import Tone from 'tone';
 
 export interface IKeyboardProps {}
 export interface IKey {
@@ -10,7 +17,36 @@ export interface IKey {
   style?: object;
 }
 
+export interface IKeyPressed {
+  isPressed?: boolean;
+  startTime?: number;
+  synth: any;
+}
+
+export enum KeyboardMap {
+  'a' = 'C4',
+  'w' = 'C#4',
+  's' = 'D4',
+  'e' = 'Eb4',
+  'd' = 'E4',
+  'f' = 'F4',
+  't' = 'F#4',
+  'g' = 'G4',
+  'y' = 'G#4',
+  'h' = 'A4',
+  'u' = 'Bb4',
+  'j' = 'B4',
+  'k' = 'C5',
+  'i' = 'C#5',
+  'l' = 'D5',
+  'o' = 'Eb5',
+  ';' = 'E5'
+}
+
 const Keyboard: FC<IKeyboardProps> = props => {
+  const captureContext: ICaptureContext = useContext(CaptureContext);
+  const [keysPressed, dispatch] = useReducer(reducer, {});
+
   const keys: IKey[] = [
     { key: 'C4', keyboardKey: 'a' },
     { key: 'C#4', keyboardKey: 'w', color: 'black', style: { left: '65px' } },
@@ -30,6 +66,48 @@ const Keyboard: FC<IKeyboardProps> = props => {
     { key: 'Eb5', keyboardKey: 'o', color: 'black', style: { left: '1030px' } },
     { key: 'E5', keyboardKey: ';' }
   ];
+
+  useEffect(() => {
+    const handleKeyDown = (keyPressed: string) => {
+      const note = (KeyboardMap as any)[keyPressed];
+
+      if (note && !get((keysPressed as any)[keyPressed], 'isPressed', false)) {
+        const kpObj: IKeyPressed = (keysPressed as any)[keyPressed] || {};
+        kpObj.isPressed = true;
+        kpObj.synth = kpObj.synth || new Tone.Synth().toMaster();
+        kpObj.startTime = new Date().getTime();
+        kpObj.synth.triggerAttack(note);
+        dispatch({ type: ActionName.OverwriteKeyPressData, payload: { keyPressed, keyData: kpObj } as Payload });
+      }
+    };
+
+    const handleKeyUp = (keyPressed: string) => {
+      const note = (KeyboardMap as any)[keyPressed];
+
+      if (note && get((keysPressed as any)[keyPressed], 'isPressed', false)) {
+        const kpObj: IKeyPressed = (keysPressed as any)[keyPressed];
+
+        kpObj.synth.triggerRelease();
+        kpObj.isPressed = false;
+
+        const note = (KeyboardMap as any)[keyPressed];
+        const dur = captureContext.calculateDuration(kpObj.startTime);
+        const playbackNote: IPlaybackNote = { note, dur };
+        captureContext.captureNote(playbackNote);
+      }
+    };
+
+    const keyDown = (e: any) => handleKeyDown(e.key.toString());
+    document.addEventListener('keydown', keyDown, false);
+
+    const keyUpFunc = (e: any) => handleKeyUp(e.key.toString());
+    document.addEventListener('keyup', keyUpFunc, false);
+
+    return () => {
+      window.removeEventListener('keydown', keyDown);
+      window.removeEventListener('keyup', keyUpFunc);
+    };
+  }, [captureContext, keysPressed]);
 
   return (
     <div className="keyboard">
