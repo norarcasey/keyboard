@@ -8,6 +8,7 @@ import './styles.css';
 import get from 'lodash/get';
 // @ts-ignore
 import Tone from 'tone';
+import { IOctiveContext, OctiveContext } from '../../contexts/octive-context';
 
 export interface IKeyboardProps {}
 export interface IKey {
@@ -23,53 +24,48 @@ export interface IKeyPressed {
   synth: any;
 }
 
-export enum KeyboardMap {
-  'a' = 'C4',
-  'w' = 'C#4',
-  's' = 'D4',
-  'e' = 'Eb4',
-  'd' = 'E4',
-  'f' = 'F4',
-  't' = 'F#4',
-  'g' = 'G4',
-  'y' = 'G#4',
-  'h' = 'A4',
-  'u' = 'Bb4',
-  'j' = 'B4',
-  'k' = 'C5',
-  'i' = 'C#5',
-  'l' = 'D5',
-  'o' = 'Eb5',
-  ';' = 'E5'
-}
-
 const Keyboard: FC<IKeyboardProps> = props => {
   const captureContext: ICaptureContext = useContext(CaptureContext);
+  const octiveContext: IOctiveContext = useContext(OctiveContext);
   const [keysPressed, dispatch] = useReducer(reducer, {});
 
   const keys: IKey[] = [
-    { key: 'C4', keyboardKey: 'a' },
-    { key: 'C#4', keyboardKey: 'w', color: 'black', style: { left: '65px' } },
-    { key: 'D4', keyboardKey: 's' },
-    { key: 'Eb4', keyboardKey: 'e', color: 'black', style: { left: '200px' } },
-    { key: 'E4', keyboardKey: 'd' },
-    { key: 'F4', keyboardKey: 'f' },
-    { key: 'F#4', keyboardKey: 't', color: 'black', style: { left: '432px' } },
-    { key: 'G4', keyboardKey: 'g' },
-    { key: 'G#4', keyboardKey: 'y', color: 'black', style: { left: '551px' } },
-    { key: 'A4', keyboardKey: 'h' },
-    { key: 'Bb4', keyboardKey: 'u', color: 'black', style: { left: '674px' } },
-    { key: 'B4', keyboardKey: 'j' },
-    { key: 'C5', keyboardKey: 'k' },
-    { key: 'C#5', keyboardKey: 'i', color: 'black', style: { left: '909px' } },
-    { key: 'D5', keyboardKey: 'l' },
-    { key: 'Eb5', keyboardKey: 'o', color: 'black', style: { left: '1030px' } },
-    { key: 'E5', keyboardKey: ';' }
+    { key: 'C', keyboardKey: 'a' },
+    { key: 'C#', keyboardKey: 'w', color: 'black', style: { left: '65px' } },
+    { key: 'D', keyboardKey: 's' },
+    { key: 'Eb', keyboardKey: 'e', color: 'black', style: { left: '200px' } },
+    { key: 'E', keyboardKey: 'd' },
+    { key: 'F', keyboardKey: 'f' },
+    { key: 'F#', keyboardKey: 't', color: 'black', style: { left: '432px' } },
+    { key: 'G', keyboardKey: 'g' },
+    { key: 'G#', keyboardKey: 'y', color: 'black', style: { left: '551px' } },
+    { key: 'A', keyboardKey: 'h' },
+    { key: 'Bb', keyboardKey: 'u', color: 'black', style: { left: '674px' } },
+    { key: 'B', keyboardKey: 'j' },
+    { key: 'C', keyboardKey: 'k' },
+    { key: 'C#', keyboardKey: 'i', color: 'black', style: { left: '909px' } },
+    { key: 'D', keyboardKey: 'l' },
+    { key: 'Eb', keyboardKey: 'o', color: 'black', style: { left: '1030px' } },
+    { key: 'E', keyboardKey: ';' }
   ];
+
+  const noteLookup = (keyPressed: string) => {
+    const key = keys.find(key => {
+      if (key.keyboardKey === keyPressed) {
+        return key;
+      }
+    });
+
+    if (key) {
+      return octiveContext.formatKeyOctive(key.key, keys.indexOf(key));
+    }
+
+    return null;
+  };
 
   useEffect(() => {
     const handleKeyDown = (keyPressed: string) => {
-      const note = (KeyboardMap as any)[keyPressed];
+      const note = noteLookup(keyPressed);
 
       if (note && !get((keysPressed as any)[keyPressed], 'isPressed', false)) {
         const kpObj: IKeyPressed = (keysPressed as any)[keyPressed] || {};
@@ -82,7 +78,7 @@ const Keyboard: FC<IKeyboardProps> = props => {
     };
 
     const handleKeyUp = (keyPressed: string) => {
-      const note = (KeyboardMap as any)[keyPressed];
+      const note = noteLookup(keyPressed);
 
       if (note && get((keysPressed as any)[keyPressed], 'isPressed', false)) {
         const kpObj: IKeyPressed = (keysPressed as any)[keyPressed];
@@ -90,7 +86,6 @@ const Keyboard: FC<IKeyboardProps> = props => {
         kpObj.synth.triggerRelease();
         kpObj.isPressed = false;
 
-        const note = (KeyboardMap as any)[keyPressed];
         const dur = captureContext.calculateDuration(kpObj.startTime);
         const playbackNote: IPlaybackNote = { note, dur };
         captureContext.captureNote(playbackNote);
@@ -111,8 +106,8 @@ const Keyboard: FC<IKeyboardProps> = props => {
 
   return (
     <div className="keyboard">
-      {keys.map(k => (
-        <Key key={k.key} note={k.key} keyboardKey={k.keyboardKey} color={k.color} style={k.style}></Key>
+      {keys.map((k, i) => (
+        <Key key={k.key} note={octiveContext.formatKeyOctive(k.key, i)} keyboardKey={k.keyboardKey} color={k.color} style={k.style}></Key>
       ))}
     </div>
   );
