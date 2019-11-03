@@ -1,0 +1,10 @@
+.set-octive {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+}
+
+.set-octive label {
+  margin-bottom: 10px;
+}

@@ -109,7 +109,14 @@ const Keyboard: FC<IKeyboardProps> = props => {
   return (
     <div className="keyboard">
       {keys.map((k, i) => (
-        <Key key={`${k.key}${i}`} note={octiveContext.formatKeyOctive(k.key, i)} keyboardKey={k.keyboardKey} color={k.color} style={k.style}></Key>
+        <Key
+          key={`${k.key}${i}`}
+          octive={octiveContext.octive}
+          note={octiveContext.formatKeyOctive(k.key, i)}
+          keyboardKey={k.keyboardKey}
+          color={k.color}
+          style={k.style}
+        ></Key>
       ))}
     </div>
   );
