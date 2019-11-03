@@ -4,6 +4,7 @@ import PlayBackControls from './components/play-back-controls';
 import PlaybackDisplay from './components/play-back-display';
 import { CaptureProvider } from './contexts/capture-context';
 import { OctiveProvider } from './contexts/octive-context';
+import OctiveControl from './components/octive-control';
 import './App.css';
 
 const App: React.FC = () => {
@@ -15,6 +16,7 @@ const App: React.FC = () => {
           <div className="playback-container">
             <PlaybackDisplay />
             <PlayBackControls />
+            <OctiveControl />
           </div>
         </CaptureProvider>
       </OctiveProvider>

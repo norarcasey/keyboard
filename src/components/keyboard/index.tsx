@@ -49,21 +49,23 @@ const Keyboard: FC<IKeyboardProps> = props => {
     { key: 'E', keyboardKey: ';' }
   ];
 
-  const noteLookup = (keyPressed: string) => {
-    const key = keys.find(key => {
-      if (key.keyboardKey === keyPressed) {
-        return key;
-      }
-    });
-
-    if (key) {
-      return octiveContext.formatKeyOctive(key.key, keys.indexOf(key));
-    }
-
-    return null;
-  };
-
   useEffect(() => {
+    const noteLookup = (keyPressed: string) => {
+      const key = keys.find(key => {
+        if (key.keyboardKey === keyPressed) {
+          return key;
+        } else {
+          return null;
+        }
+      });
+
+      if (key) {
+        return octiveContext.formatKeyOctive(key.key, keys.indexOf(key));
+      }
+
+      return null;
+    };
+
     const handleKeyDown = (keyPressed: string) => {
       const note = noteLookup(keyPressed);
 
@@ -102,12 +104,12 @@ const Keyboard: FC<IKeyboardProps> = props => {
       window.removeEventListener('keydown', keyDown);
       window.removeEventListener('keyup', keyUpFunc);
     };
-  }, [captureContext, keysPressed]);
+  }, [captureContext, keysPressed, octiveContext, keys]);
 
   return (
     <div className="keyboard">
       {keys.map((k, i) => (
-        <Key key={k.key} note={octiveContext.formatKeyOctive(k.key, i)} keyboardKey={k.keyboardKey} color={k.color} style={k.style}></Key>
+        <Key key={`${k.key}${i}`} note={octiveContext.formatKeyOctive(k.key, i)} keyboardKey={k.keyboardKey} color={k.color} style={k.style}></Key>
       ))}
     </div>
   );
