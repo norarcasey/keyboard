@@ -78,9 +78,9 @@ const PlayBackControls: FC<IPlayBackControls> = props => {
           </div>
         )}
       </div>
-      <div className="record" title="record">
+      {/* <div className="record" title="record">
         <FontAwesomeIcon size="lg" color="red" icon={faCircle} />
-      </div>
+      </div> */}
       <div className="clear" title="clear" onClick={handleClearPlaybackData}>
         <FontAwesomeIcon size="lg" icon={faBan} />
       </div>
