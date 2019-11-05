@@ -8,7 +8,7 @@ import './styles.css';
 import get from 'lodash/get';
 // @ts-ignore
 import Tone from 'tone';
-import { IOctiveContext, OctiveContext } from '../../contexts/octive-context';
+import { IOctaveContext, OctaveContext } from '../../contexts/octave-context';
 
 export interface IKeyboardProps {}
 export interface IKey {
@@ -26,7 +26,7 @@ export interface IKeyPressed {
 
 const Keyboard: FC<IKeyboardProps> = props => {
   const captureContext: ICaptureContext = useContext(CaptureContext);
-  const octiveContext: IOctiveContext = useContext(OctiveContext);
+  const octaveContext: IOctaveContext = useContext(OctaveContext);
   const [keysPressed, dispatch] = useReducer(reducer, {});
 
   const keys: IKey[] = [
@@ -60,7 +60,7 @@ const Keyboard: FC<IKeyboardProps> = props => {
       });
 
       if (key) {
-        return octiveContext.formatKeyOctive(key.key, keys.indexOf(key));
+        return octaveContext.formatKeyOctave(key.key, keys.indexOf(key));
       }
 
       return null;
@@ -104,15 +104,15 @@ const Keyboard: FC<IKeyboardProps> = props => {
       window.removeEventListener('keydown', keyDown);
       window.removeEventListener('keyup', keyUpFunc);
     };
-  }, [captureContext, keysPressed, octiveContext, keys]);
+  }, [captureContext, keysPressed, octaveContext, keys]);
 
   return (
     <div className="keyboard">
       {keys.map((k, i) => (
         <Key
           key={`${k.key}${i}`}
-          octive={octiveContext.octive}
-          note={octiveContext.formatKeyOctive(k.key, i)}
+          octave={octaveContext.octave}
+          note={octaveContext.formatKeyOctave(k.key, i)}
           keyboardKey={k.keyboardKey}
           color={k.color}
           style={k.style}

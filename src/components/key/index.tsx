@@ -9,7 +9,7 @@ export interface IKeyProps {
   note: string;
   keyboardKey: string;
   color?: string;
-  octive: number;
+  octave: number;
   style?: object;
 }
 

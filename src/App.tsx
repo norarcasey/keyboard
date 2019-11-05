@@ -3,23 +3,23 @@ import Keyboard from './components/keyboard';
 import PlayBackControls from './components/play-back-controls';
 import PlaybackDisplay from './components/play-back-display';
 import { CaptureProvider } from './contexts/capture-context';
-import { OctiveProvider } from './contexts/octive-context';
-import OctiveControl from './components/octive-control';
+import { OctaveProvider } from './contexts/octave-context';
+import OctaveControl from './components/octave-control';
 import './App.css';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <OctiveProvider>
+      <OctaveProvider>
         <CaptureProvider>
           <Keyboard />
           <div className="playback-container">
             <PlaybackDisplay />
             <PlayBackControls />
-            <OctiveControl />
+            <OctaveControl />
           </div>
         </CaptureProvider>
-      </OctiveProvider>
+      </OctaveProvider>
     </div>
   );
 };
