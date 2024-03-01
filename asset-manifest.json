@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/keyboard/static/css/main.3d137ed4.chunk.css",
+    "main.js": "/keyboard/static/js/main.87aba29a.chunk.js",
+    "main.js.map": "/keyboard/static/js/main.87aba29a.chunk.js.map",
+    "runtime-main.js": "/keyboard/static/js/runtime-main.3561f81d.js",
+    "runtime-main.js.map": "/keyboard/static/js/runtime-main.3561f81d.js.map",
+    "static/css/2.80b6bf1c.chunk.css": "/keyboard/static/css/2.80b6bf1c.chunk.css",
+    "static/js/2.e44c2fb1.chunk.js": "/keyboard/static/js/2.e44c2fb1.chunk.js",
+    "static/js/2.e44c2fb1.chunk.js.map": "/keyboard/static/js/2.e44c2fb1.chunk.js.map",
+    "index.html": "/keyboard/index.html",
+    "precache-manifest.2bea3f1eb09292e16d6e28dbbee434ef.js": "/keyboard/precache-manifest.2bea3f1eb09292e16d6e28dbbee434ef.js",
+    "service-worker.js": "/keyboard/service-worker.js",
+    "static/css/2.80b6bf1c.chunk.css.map": "/keyboard/static/css/2.80b6bf1c.chunk.css.map",
+    "static/css/main.3d137ed4.chunk.css.map": "/keyboard/static/css/main.3d137ed4.chunk.css.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3561f81d.js",
+    "static/css/2.80b6bf1c.chunk.css",
+    "static/js/2.e44c2fb1.chunk.js",
+    "static/css/main.3d137ed4.chunk.css",
+    "static/js/main.87aba29a.chunk.js"
+  ]
+}
