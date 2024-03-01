@@ -2,7 +2,7 @@
   "name": "keyboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://jcmckay.github.io/keyboard",
+  "homepage": "http://noracasey.com/keyboard",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
@@ -21,12 +21,13 @@
     "typescript": "3.6.4"
   },
   "scripts": {
-    "deploy": "yarn build && yarn post-build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "post-build": "rm -rf ~/src/jcmckay/jcmckay.github.io/keyboard/* && mv -v build/* ~/src/jcmckay/jcmckay.github.io/keyboard/",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
   }
 }
